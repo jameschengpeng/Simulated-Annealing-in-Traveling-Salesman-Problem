@@ -1,0 +1,9 @@
+Since in the textbook, neighbors are defined by "reverse". We regard the result got by "reverse" and "t1" as the global minimum
+
+In order to do comparation, for each certain number of vertices, we store the graph. No matter what kind of neighboring definition, we apply the algorithms to the same graph
+
+"Reverse"
+t2 performs better than t1 in terms of iterations and running time. t3 performs better than t1 in terms of iterations but not running time. All of the three transition mechanisms converge to the global minimum. 
+
+"Swap"
+Comparing with "Reverse", we find that the 

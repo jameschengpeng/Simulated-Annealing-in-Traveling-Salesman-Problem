@@ -8,7 +8,7 @@ import time
 import pickle
 # %%
 ############ Hyperparameters
-vertices = 100
+vertices = 150
 farthest = 10
 neighbor = "reverse"
 trans1 = "t1"
@@ -17,8 +17,8 @@ trans3 = "t3"
 initial_temp = 1
 ro = 0.9
 max_sample = 20
-max_running_time = 30
-use_existed_graph = True
+max_running_time = 50
+use_existed_graph = False
 ############
 # %%
 num_plots = 3
@@ -60,7 +60,7 @@ plt.plot(x1, y1)
 labels.append("T1")
 print("Finished transition 1. The number of iteration is: " + str(itr1))
 
-# %   
+# %%
 sa2 = anneal.simulated_annealing(graph = graph, neighbor = neighbor, trans = trans2)
 cost2 = []
 start_time2 = time.time()
