@@ -2,8 +2,8 @@ Since in the textbook, neighbors are defined by "reverse". We regard the result 
 
 In order to do comparation, for each certain number of vertices, we store the graph. No matter what kind of neighboring definition, we apply the algorithms to the same graph
 
-"Reverse"
-t2 performs better than t1 in terms of iterations and running time. t3 performs better than t1 in terms of iterations but not running time. All of the three transition mechanisms converge to the global minimum. 
+"reverse"
+t3 performs worst, don't care about that
+finally, t2 and t1 cost approximately same time to converge. HOWEVER, t2 converges faster at first!
 
-"Swap"
-Comparing with "Reverse", we find that the 
+IDEA: use t2 first, then t1. The changing point is a hyper-parameter

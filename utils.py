@@ -2,6 +2,8 @@ import numpy as np
 import random
 import math
 import copy
+from multiprocessing import Pool
+import time
 
 # graph is of class construct_graph
 def cost(perm, graph):
@@ -141,4 +143,14 @@ def transition_3(graph, perm, temp, neighbor, ro, max_sample):
             return new_perm
         else:
             return perm
+
+def achieve_converge(x_val, y_val):
+    convergent = y_val[-1]
+    threshold = int(convergent) + 1
+    for i in range(len(y_val)):
+        if y_val[i] <= threshold:
+            check_subseq = y_val[i:i+100]
+            check_result = all(y <= threshold for y in check_subseq)
+            if check_result == True:
+                return x_val[i]
 

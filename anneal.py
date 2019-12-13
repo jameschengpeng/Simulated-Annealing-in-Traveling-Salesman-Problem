@@ -24,21 +24,20 @@ class simulated_annealing:
     # graph is an object of class construct_graph
     # neighbor can be "reverse" or "swap", the default value is "reverse"
     # transition can be of type 1, type 2, type 3 (refer to utils.py)
-    def __init__(self, graph, neighbor = "reverse", trans = "t1"):
+    def __init__(self, graph, neighbor = "reverse"):
         self.graph = graph
         self.neighbor = neighbor
-        self.trans = trans
         self.initial_state = list(np.random.permutation(graph.vertices))
         self.current_state = copy.deepcopy(self.initial_state)
 
-    def single_transition(self, ro, max_sample, temp):
-        if self.trans == "t1":
+    def single_transition(self, ro, max_sample, temp, trans = "t1"):
+        if trans == "t1":
             self.current_state = utils.transition_1(self.graph, self.current_state,
                                                     temp, self.neighbor)
-        elif self.trans == "t2":
+        elif trans == "t2":
             self.current_state = utils.transition_2(self.graph, self.current_state,
                                                     temp, self.neighbor, ro)
-        elif self.trans == "t3":
+        elif trans == "t3":
             self.current_state = utils.transition_3(self.graph, self.current_state,
                                                     temp, self.neighbor, ro, max_sample)
 
