@@ -2,6 +2,7 @@ import random
 import numpy as np
 import utils
 import copy
+import math
 
 # We assume that the graph is fully connected
 # otherwise, we can simply set the distance between two non-adjacent vertices as +ve infinity
@@ -11,13 +12,19 @@ class construct_graph:
     def __init__(self, vertices, farthest):
         self.vertices = vertices
         self.farthest = farthest
-
+    # we set the distances by randomly picking vertices number of points in a square with side length farthest
+    # then we compute the distance between any two cities
+    # we cannot just randomly generate a number to be the distance because it might be invalid (e.g. AB > AC + CB)
     def set_distance(self):
+        self.coordinate = {i:None for i in range(self.vertices)}
+        for k in self.coordinate.keys():
+            x = random.uniform(0, self.farthest)
+            y = random.uniform(0, self.farthest)
+            self.coordinate[k] = (x,y)
         self.dist_matrix = np.zeros(shape = (self.vertices, self.vertices), dtype = np.float)
         for i in range(self.vertices - 1):
             for j in range(i+1, self.vertices):
-                dist = random.uniform(0, self.farthest)
-                #dist = np.random.uniform(0,self.farthest,1)[0]
+                dist = math.sqrt((self.coordinate[i][0]-self.coordinate[j][0])**2 + (self.coordinate[i][1]-self.coordinate[j][1])**2)
                 self.dist_matrix[i][j] = self.dist_matrix[j][i] = dist
 
 class simulated_annealing:

@@ -52,9 +52,8 @@ def get_eligible_new_perm(perm, neighbor, s_or_l, old_cost, graph):
         counter = 0
         while cost(new_perm, graph) > old_cost:
             counter += 1
-            if counter > 1000:
+            if counter > 100:
                 return copy.deepcopy(perm)
-                break
             new_perm = get_new_perm(perm, neighbor)
         return new_perm
     elif s_or_l == "l":
@@ -63,9 +62,8 @@ def get_eligible_new_perm(perm, neighbor, s_or_l, old_cost, graph):
         counter = 0
         while cost(new_perm, graph) <= old_cost:
             counter += 1
-            if counter > 1000:
+            if counter > 100:
                 return copy.deepcopy(perm)
-                break
             new_perm = get_new_perm(perm, neighbor)
         return new_perm        
 
@@ -73,8 +71,12 @@ def get_eligible_new_perm(perm, neighbor, s_or_l, old_cost, graph):
 # return a perm according to the probability distribution
 def softmax_selection(sample_perms, graph):
     sample_cost = [cost(p, graph) for p in sample_perms]
-    denominator = sum([math.exp(-c) for c in sample_cost])
-    prob_dist = [(math.exp(-c) / denominator) for c in sample_cost]
+    max_cost = max(sample_cost)
+    diff_cost = [(max_cost-c) for c in sample_cost]
+    #denominator = sum([math.exp(-c) for c in sample_cost])
+    denominator = sum([math.exp(dc) for dc in diff_cost])
+    #prob_dist = [(math.exp(-c) / denominator) for c in sample_cost]
+    prob_dist = [(math.exp(dc) / denominator) for dc in diff_cost]
     cdf = [sum(prob_dist[:(i+1)]) for i in range(len(prob_dist))]
     determinant = random.uniform(0,1)
     for i in range(len(cdf)):
@@ -145,11 +147,14 @@ def transition_3(graph, perm, temp, neighbor, ro, max_sample):
             return perm
 
 def achieve_converge(x_val, y_val):
-    convergent = y_val[-1]
+    convergent = sum(y_val[-10:])/10
     threshold = int(convergent) + 1
     for i in range(len(y_val)):
         if y_val[i] <= threshold:
-            check_subseq = y_val[i:i+100]
+            if i+100 < len(y_val):
+                check_subseq = y_val[i:i+100]
+            else:
+                check_subseq = y_val[i:]
             check_result = all(y <= threshold for y in check_subseq)
             if check_result == True:
                 return x_val[i]

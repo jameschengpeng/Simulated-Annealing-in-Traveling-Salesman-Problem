@@ -1,0 +1,11 @@
+v50:
+The sequence converges to 65.83021706510795
+
+v100:
+The sequence converges to 161.70125399400334
+
+v150:
+The sequence converges to 318.39675708563533
+
+v200:
+The sequence converges to 483.08561237046536
